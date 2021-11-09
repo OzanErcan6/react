@@ -2,17 +2,13 @@ import React, { Component } from "react";
 import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle } from "reactstrap";
 
 class DishDetail extends Component{
-    constructor(props) {
-        super(props);
 
-        console.log(props);
-        
-        // stores iproperties of this component
-        this.state = {
-            selectedDishDetail: this.props.dsdetail
-        };
+    componentDidMount(){
+        console.log('dishdetail component componentDidMounbt is invoked');  
+    }
 
-
+    componentDidUpdate(){
+        console.log('dishdetail component componentDidUpdate is invoked');  
     }
 
     renderDish(dish) {
@@ -27,6 +23,7 @@ class DishDetail extends Component{
                             <CardText> {dish.description} </CardText>
                         </CardBody>
                     </Card>
+                    
                 </div>   
             );
         }
@@ -38,32 +35,36 @@ class DishDetail extends Component{
     }
 
     renderComments(comments){
-        if (comments == null) {
-            return (<div></div>)
-        }
-        const all_comments = comments.map(entry => {
-            return (
-                <li key={entry.id}>
-                    <h7>
-                    {entry.comment}<br></br><br></br>
-                    <h7>--</h7>{entry.author}<h7>, </h7>
-                    {entry.date}<br></br><br></br>
-                    </h7> 
-                </li>
-            )
-        })
-        return (
-            <div className='col-12 col-md-5 m-1'>
+        if(comments!=null)
+            return(
+                <div className='col-12 col-md-5 m-1'>
                 <h4> Comments </h4>
                 <ul className='list-unstyled'>
-                    {all_comments}
+                    {comments.map((comment) => {
+                        return(
+                            <li key={comment.id}>
+                            <p>{comment.comment}</p>
+                            <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', {year:'numeric', month:'short',day:'2-digit'})
+                        .format(new Date(Date.parse(comment.date)))}<br></br><br></br>
+                        </p>
+                        </li>
+                        )
+                    })}
                 </ul>
             </div>
-        )
+            )
+        else
+            return(
+                <div></div>
+            )
+
     }
 
 
     render(){
+
+        console.log('dishdetail component render is invoked');  
+
         const dish = this.props.dish
         
         if (dish == null) {
@@ -74,10 +75,13 @@ class DishDetail extends Component{
         const dishComment = this.renderComments(dish.comments);
 
         return (
-            <div className='row'>
-                {dishItem}
-                {dishComment}
+            <div className="container">
+                <div className='row'>
+                    {dishItem}
+                    {dishComment}
+                </div>
             </div>
+
         )
     }
 
