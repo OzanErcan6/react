@@ -3,7 +3,6 @@ import { COMMENTS } from '../shared/comments';
 import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
 
-
 export const initialState = {
     dishes: DISHES,
     comments: COMMENTS,
@@ -11,9 +10,6 @@ export const initialState = {
     leaders: LEADERS
 };
 
-
-// reducer will create a new state object because its immutable
 export const Reducer = (state = initialState, action) => {
     return state;
-
-}
+};
