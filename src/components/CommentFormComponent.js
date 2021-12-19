@@ -1,70 +1,60 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
+import { Card, CardImg, CardImgOverlay, CardText, CardBody, CardTitle, Breadcrumb, BreadcrumbItem} from "reactstrap";
+import {Link} from 'react-router-dom';
 
-import {   
-    Button, Modal, ModalBody, ModalHeader, Label, Row, Col
-} from "reactstrap";
-
+import { Button, Modal, ModalHeader, ModalBody,Form, FormGroup, Label, Input } from 'reactstrap';
 import { Control, LocalForm, Errors } from 'react-redux-form';
 
-//// validators
+
 const required = (val) => val && val.length; //value > 0
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
 
-class CommentForm extends Component{
+class CommentForm extends Component {
 
     constructor(props) {
         super(props);
-
-
         this.state = {
-            isCommentFormModalOpen: false
+            isModalOpen: false,
         };
-
-        this.toggleCommentFormModal = this.toggleCommentFormModal.bind(this);
-        this.handleCommentFormSubmit = this.handleCommentFormSubmit.bind(this);
-
-    }
-
-    handleCommentFormSubmit(values) {
-        console.log("Current State is: " + JSON.stringify(values));
-        alert("Current State is: " + JSON.stringify(values));
-
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.toggleModal = this.toggleModal.bind(this);
 
     }
 
-    toggleCommentFormModal() {
+    handleSubmit(values){
+        this.toggleModal();
+        alert("Current State is: " + JSON.stringify(values));        
+        //event.preventDefault()
+    }
+
+    toggleModal() {
         this.setState({
-            isCommentFormModalOpen: !this.state.isCommentFormModalOpen
+            isModalOpen: !this.state.isModalOpen
         });
-    }
+      }
 
 
-    render(){
-        return(
-            <React.Fragment>
-                <Button outline onClick={this.toggleCommentFormModal}>
-                    <span className="fa fa-comments fa-lg"></span> Submit Comment
-                </Button>
+        render(){
+            return(<div>
+                    <Button outline onClick={this.toggleModal}>
+                        <span className="fa fa-sign-in fa-lg">
+                            Submit comment
+                        </span>
+                    </Button>
 
-
-                {/* commentform  Modal */}
-                <Modal isOpen={this.state.isCommentFormModalOpen} toggle={this.toggleCommentFormModal} >
-                    <ModalHeader toggle={this.toggleCommentFormModal}> Submit Comment </ModalHeader>
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
                     <ModalBody>
-                       
-                        <LocalForm onSubmit={(values) => this.handleCommentFormSubmit(values)}>
-                          
-                            {/* rating */}
-                            <Row className="form-group">
-                                <Label htmlFor="rating" md={12} >Rating</Label>
-                                <Col md={12}>
-                                    <Control.select model=".rating"
+                        <Form onSubmit={(values) => this.handleSubmit(values)}>
+                            <FormGroup>
+                                <Label htmlFor='rating'>Rating</Label>
+                                <Control.select model=".rating"
                                         className="form-control"
                                         name="rating"
                                         id="rating"
                                         validators={{
-                                            required
+                                            
                                         }}
                                     >
                                         <option>Please Select</option>
@@ -74,86 +64,43 @@ class CommentForm extends Component{
                                         <option>4</option>
                                         <option>5</option>
                                     </Control.select>
-                                    <Errors
-                                        className="text-danger"
-                                        model=".author"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required',
-                                        }}
-                                    />  
-                                </Col>
-                            </Row>
-
-
-                            {/* author */}
-                            <Row className="form-group">
-                                <Label htmlFor="author" md={12}> Your Name </Label>
-                                <Col md={12}>
-                                    <Control.text model=".author" id="author" name="author"
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor='author'>Your Name</Label>
+                                <Control.text model=".author" id="author" name="author"
                                         placeholder="First Name"
                                         className="form-control"
-                                        validators={{
-                                            required, minLength: minLength(3), maxLength: maxLength(15)
+                                        validators={{ 
+                                           
                                         }}
-                                    />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".author"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required',
-                                            minLength: 'Must be greater than 2 characters',
-                                            maxLength: 'Must be 15 characters or less'
-                                        }}
-                                    />                                    
-                                </Col>
-                            </Row>
-
-
-
-
-                            {/* comment */}
-                            <Row className="form-group">
-                                <Label htmlFor="comment" md={12}>Comment</Label>
-                                <Col md={12}>
-                                    <Control.textarea model=".comment" id="comment" name="comment"
-                                        rows="6"
+                                    />                            
+                            </FormGroup>
+                            <FormGroup>
+                                <Label htmlFor='comment'>Comment</Label>
+                                <Control.textarea model=".comment" id="comment" name="comment"
+                                        placeholder="Type Your Comment"
                                         className="form-control"
+                                        rows="6"
                                         validators={{
-                                            required
+                                           
                                         }}
-                                    />
-                                    <Errors
-                                        className="text-danger"
-                                        model=".author"
-                                        show="touched"
-                                        messages={{
-                                            required: 'Required',
-                                        }}
-                                    />  
-                                </Col>
+                                    />                            
+                            </FormGroup>
 
-                            </Row>
 
-                            {/* submit button */}
-                            <Row className="form-group">
-                                <Col>
-                                    <Button type="submit" color="primary">
-                                        Submit
-                                    </Button>
-                                </Col>
-                            </Row>
-
-                        </LocalForm>
-
+                            <Button type='submit' value='submit' color='primary'>Submit</Button>
+                        </Form>
                     </ModalBody>
                 </Modal>
+                 </div>);
+    
+
+            }
+        }
 
 
-            </React.Fragment>
-        );
-    }
-}
+
 
 export default CommentForm;
+
+

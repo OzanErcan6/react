@@ -6,11 +6,13 @@ import Header from './HeaderComponent';
 import Footer from './FooterComponent';
 import Contact from './ContactComponent';
 import About from './AboutComponent'
+import OzanContact from './OzanFormComponent';
 import { Switch, Route, Redirect, withRouter } from 'react-router';
 import {connect} from 'react-redux'
 
 
 // map redux store's state into props that will available to the components
+// redux store'daki state'i kullanmak icin
 const mapStateToProps = state => {
     return {
       dishes: state.dishes,
@@ -21,16 +23,11 @@ const mapStateToProps = state => {
 }
 
 class Main extends Component {
-
   constructor(props) {
     super(props);
-
   }
 
- 
-
   render() {
-
     const HomePage = () => {
       return(
           <Home 
@@ -46,11 +43,8 @@ class Main extends Component {
         <DishDetail 
           dish = {this.props.dishes.filter((dish) => dish.id === parseInt(match.params.dishId, 10))[0]}
           comments = {this.props.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId, 10))}
-          
           />
-
       )
-
     }
 
     return (
@@ -62,11 +56,10 @@ class Main extends Component {
           <Route path='/menu/:dishId' component={DishWithId}/>
           <Route exact path='/contactus' component={Contact}/>
           <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders}/>} />
+          <Route exact path='/ozan' component={OzanContact}/>
           <Redirect to="/home" />
         </Switch>
-
         <Footer />
-
       </div>
     );
   }
