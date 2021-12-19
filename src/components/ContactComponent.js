@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {Breadcrumb, BreadcrumbItem, Button, Label, Col, Row} from 'reactstrap'
 import {Link} from 'react-router-dom'
 import {Control, LocalForm, Errors} from 'react-redux-form'
-import OzanContact from './OzanFormComponent';
 
 
 const required = (val) => val && val.length;
