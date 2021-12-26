@@ -30,8 +30,6 @@ const mapDispatchToProps = dispatch => ({
   resetFeedbackForm: () => {dispatch(actions.reset('feedback'))},
   fetchComments: () => {dispatch(fetchComments())},
   fetchPromos: () => {dispatch(fetchPromos())}
-
-
 });
 
 
