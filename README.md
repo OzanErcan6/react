@@ -1,4 +1,4 @@
-# Technologies I have learned and used are:  
+# Technologies I have used to implement this app are:  
 React Components  
 React Virtual DOM  
 React Router  
